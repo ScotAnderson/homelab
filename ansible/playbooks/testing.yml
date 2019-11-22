@@ -1,0 +1,22 @@
+---
+- hosts: '{{ target }}'
+  tasks:
+    - name: Fully update all packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+        autoclean: yes
+        autoremove: yes
+
+    - name: Install necessary packages
+      apt:
+        pkg:
+        - aptitude
+
+    - name: Update SSH keys
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('pipe', 'cat ./public_keys/*.pub') }}"
+        exclusive: True
+

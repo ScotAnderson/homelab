@@ -1,9 +1,23 @@
 all:
-  hosts:
-    ot1:
-      ansible_user: root
-      ansible_host: 10.10.10.2
-    ot2:
-      ansible_user: root
-      ansible_host: 10.10.10.12
+  children:
+    infrastructure:
+      hosts:
+        7dtd:
+          ansible_user: root
+          ansible_host: 10.10.10.15
+        pixie:
+          ansible_user: root
+          ansible_host: 10.10.10.252
+        kub01:
+          ansible_user: root
+          ansible_host: 10.10.10.201
+        kub02:
+          ansible_user: root
+          ansible_host: 10.10.10.202
+        ot01:
+          ansible_user: root
+          ansible_host: 10.10.10.2
+        ot02:
+          ansible_user: root
+          ansible_host: 10.10.10.12
   
