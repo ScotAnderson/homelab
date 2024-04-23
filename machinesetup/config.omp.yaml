@@ -6,10 +6,19 @@ blocks:
   - type: prompt
     alignment: left
     segments:
+      - type: session
+        style: diamond
+        leading_diamond: ""
+        background: "#073642"
+        foreground: "#859900"
+        template: "{{if .Root}}<#dc322f> </>{{ else }} {{ end }}{{ .UserName }} "
+
       - type: path
-        style: powerline
-        powerline_symbol: ""
-        foreground: "#ffffff"
-        background: "#61AFEF"
+        style: plain
+        background: "#839496"
+        foreground: "#073642"
         properties:
-          style: folder
+          style: full
+          folder_separator_icon: "󰿟"
+          home_icon: "~"
+        template: "<parentBackground></>  {{ .Path }} "
