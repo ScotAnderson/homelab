@@ -6,6 +6,7 @@ blocks:
   - type: prompt
     alignment: left
     segments:
+      # admin account indicator followed by user name
       - type: session
         style: diamond
         leading_diamond: ""
@@ -13,6 +14,7 @@ blocks:
         foreground: "#859900"
         template: "{{if .Root}}<#dc322f> </>{{ else }} {{ end }}{{ .UserName }} "
 
+      # complete path
       - type: path
         style: plain
         background: "#839496"
@@ -22,3 +24,32 @@ blocks:
           folder_separator_icon: "󰿟"
           home_icon: "~"
         template: "<parentBackground></>  {{ .Path }} "
+
+      - type: git
+        style: plain
+        background: yellow
+        background_templates: [
+          "{{ if or (.Working.Changed) (.Staging.Changed) }}lightRed{{ end }}",
+          "{{ if and (gt .Ahead 0) (gt .Behind 0) }}red{{ end }}",
+          "{{ if gt .Ahead 0 }}lightMagenta{{ end }}",
+          "{{ if gt .Behind 0 }}lightMagenta{{ end }}"
+        ]
+        foreground: black
+        properties:
+          branch_max_length: 25
+          fetch_stash_count: true
+          fetch_status: true
+          fetch_upstream_icon: true
+        template: "<parentBackground></> {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} "
+
+      - type: status
+        style: diamond
+        trailing_diamond: ""
+        background: "#268bd2"
+        background_templates: [
+          "{{ if gt .Code 0 }}#e91e63{{ end }}"
+        ]
+        foreground: "#ffffff"
+        properties:
+          always_enabled: true
+        template: "<parentBackground></>"
